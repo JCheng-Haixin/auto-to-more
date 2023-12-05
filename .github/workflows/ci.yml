@@ -1,45 +1,41 @@
 name: CI
 on:
   push:
-    branches:
-	  # 触发ci/cd的代码分支
+    branches: # 触发ci/cd的代码分支
       - master
 jobs:
   build:
-    # 指定操作系统
     runs-on: ubuntu-latest
     steps:
-      # 将代码拉到虚拟机
-      - name: Checkout repository
+      - name: Checkout # 将代码拉到虚拟机
         uses: actions/checkout@v3
-      # 指定node版本
-      - name: Use Node.js
+     
+      - name: Use Node.js # 指定node版本
         uses: actions/setup-node@v3
         with:
           node-version: '16.x'
           registry-url: 'https://registry.npmjs.org'
-      # 依赖缓存策略
-      - name: Cache
+     
+      - name: Cache # 依赖缓存策略
         id: cache-dependencies
         uses: actions/cache@v3
         with:
           path: |
             **/node_modules
           key: ${{runner.OS}}-${{hashFiles('**/pnpm-lock.yaml')}}
-      # 安装pnpm
-      - name: Install pnpm
+     
+      - name: Install pnpm # 安装pnpm
         run: npm install -g pnpm@8.6.2
-      # 依赖下载
-      - name: Installing Dependencies
+     
+      - name: Installing Dependencies # 依赖下载
         if: steps.cache-dependencies.outputs.cache-hit != 'true'
         run: pnpm install
-      # 打包
-      - name: Running Build
+     
+      - name: Running Build # 打包
         run: pnpm run build
-      # 发布
-      - name: Running Publish
+     
+      - name: Running Publish # 发布
         working-directory: ./packages
         run: npm publish
         env:
-          # NPM_TOKEN is access token
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
