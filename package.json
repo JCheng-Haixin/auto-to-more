@@ -2,6 +2,7 @@
   "name": "auto-to-more",
   "version": "0.0.0",
   "private": false,
+  "description": "元素溢出传送",
   "scripts": {
     "dev": "vite",
     "build": "run-p type-check \"build-only {@}\" --",
@@ -10,15 +11,23 @@
     "build-only": "vite build",
     "type-check": "vue-tsc --noEmit -p tsconfig.vitest.json --composite false"
   },
-  "main": "dist/auto-to-more.mjs",
-  "module": "dist/auto-to-more.umd.js",
   "type": "module",
+  "keywords": [
+    "vue",
+    "more",
+    "overflow",
+    "vite"
+  ],
   "files": [
     "package.json",
     "README.md",
     "LICENSE",
     "dist"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/JCheng-Haixin/auto-to-more"
+  },
   "dependencies": {
     "@vue/shared": "^3.3.9",
     "lodash-es": "^4.17.21",
@@ -41,5 +50,6 @@
     "vite-plugin-dts": "^3.6.4",
     "vitest": "^0.34.6",
     "vue-tsc": "^1.8.19"
-  }
+  },
+  "license": "MIT"
 }

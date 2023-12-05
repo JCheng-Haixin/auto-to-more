@@ -11,7 +11,9 @@ export default defineConfig({
   plugins: [
     vue(),
     vueJsx(),
-    // dts()
+    dts({
+      outDir: resolve(__dirname, 'packages/dist')
+    })
   ],
   resolve: {
     alias: {
@@ -24,6 +26,7 @@ export default defineConfig({
       name: 'AutoToMore',
       fileName: 'auto-to-more'
     },
+    outDir: resolve(__dirname, 'packages/dist'),
     rollupOptions: {
       external: ['vue'],
       output: {

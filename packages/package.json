@@ -1,0 +1,27 @@
+{
+  "name": "auto-to-more",
+  "version": "1.0.4",
+  "description": "元素溢出传送",
+  "main": "./dist/auto-to-more.js",
+  "style": "./dist/style.css",
+  "typings": "./dist/index.d.ts",
+  "author": "Huang Haixin",
+  "keywords": [
+    "overflow",
+    "more",
+    "vue",
+    "vite",
+    "component"
+  ],
+  "files": [
+    "package.json",
+    "README.md",
+    "LICENSE",
+    "dist"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/JCheng-Haixin/auto-to-more"
+  },
+  "license": "MIT"
+}

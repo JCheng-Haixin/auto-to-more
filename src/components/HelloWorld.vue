@@ -1,5 +1,5 @@
 <script setup lang="ts">
-// import { AutoOverflow, AutoOverflowChild } from '../../dist'
+import { AutoOverflow, AutoOverflowChild } from '../../packages'
 
 defineProps<{
   msg: string
@@ -8,15 +8,16 @@ defineProps<{
 
 <template>
   <div class="greetings">
-    <!-- <AutoOverflow :maxCount="2">
+    <AutoOverflow :maxCount="3">
       <AutoOverflowChild><span>123</span></AutoOverflowChild>
       <AutoOverflowChild><span>456</span></AutoOverflowChild>
       <AutoOverflowChild><span>456</span></AutoOverflowChild>
+      <AutoOverflowChild><span>789</span></AutoOverflowChild>
 
       <template #overflow-content="{ OverflowContent }">
         <component :is="OverflowContent" />
       </template>
-    </AutoOverflow> -->
+    </AutoOverflow>
     <h1 class="green">{{ msg }}</h1>
     <h3>
       You’ve successfully created a project with

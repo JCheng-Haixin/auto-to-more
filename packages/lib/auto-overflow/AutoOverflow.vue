@@ -23,7 +23,6 @@
   let firstAfferentProps: any
   const overflowTargetMounted = ref(false)
   function OverflowContent(targetProps: any, { slots }: any) {
-    console.log('targetProps: ', targetProps);
     // 记录首次挂载时传入的 props
     if (!firstAfferentProps) firstAfferentProps = targetProps
     const defaultContent = slots.default && slots.default()

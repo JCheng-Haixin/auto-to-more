@@ -1,6 +1,6 @@
 import type { App } from 'vue'
-import AutoOverflow from './auto-overflow'
-import AutoOverflowChild from './auto-overflow-child'
+import AutoOverflow from './lib/auto-overflow'
+import AutoOverflowChild from './lib/auto-overflow-child'
  
 // 所有组件列表
 const components = [
@@ -26,8 +26,8 @@ export {
   AutoOverflowChild
 }
  
-const VueAmazingUI = {
+const AutoToMore = {
   install
 }
  
-export default VueAmazingUI
+export default AutoToMore
