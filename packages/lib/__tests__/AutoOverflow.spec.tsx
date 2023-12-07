@@ -18,9 +18,13 @@ function wait(timeout) {
 }
 
 describe('AutoOverflowChild', () => {
-  test('渲染内容', async () => {
+  test('动态渲染内容', async () => {
     const wrapper = mount({
+      data() {
+        return { show: true }
+      },
       render() {
+        if (!this.show) return
         return (
           <AutoOverflowChild>1</AutoOverflowChild>
         )
@@ -29,6 +33,8 @@ describe('AutoOverflowChild', () => {
     // 默认不展示，需要 nextTick
     await nextTick()
     expect(wrapper.html()).toContain('1')
+    await wrapper.setData({ show: false })
+    expect(wrapper.html()).not.toContain('1')
   })
 })
 
@@ -48,7 +54,7 @@ describe('AutoOverflow', () => {
     const wrapper = mount({
       render() {
         return (
-          <AutoOverflow v-slots={{ ['overflow-content']: () => (<>abc</>) }}>
+          <AutoOverflow>
             <AutoOverflowChild>1</AutoOverflowChild>
             <AutoOverflowChild>2</AutoOverflowChild>
             <AutoOverflowChild>3</AutoOverflowChild>
@@ -65,7 +71,7 @@ describe('AutoOverflow', () => {
     const wrapper = mount({
       render() {
         return (
-          <AutoOverflow v-slots={{ ['overflow-content']: () => (<>abc</>) }}>
+          <AutoOverflow>
             <AutoOverflowChild>1</AutoOverflowChild>
             <AutoOverflowChild>2</AutoOverflowChild>
             <AutoOverflowChild>3</AutoOverflowChild>
@@ -77,6 +83,31 @@ describe('AutoOverflow', () => {
     await nextTick()
     expect(wrapper.html()).toContain('1\n2')
     expect(wrapper.html()).not.toContain('1\n2\n3')
+  })
+
+  test('动态加减子组件时正常渲染', async () => {
+    const wrapper = mount({
+      data() {
+        return { showItemFour: false }
+      },
+      render() {
+        return (
+          <AutoOverflow>
+            <AutoOverflowChild>1</AutoOverflowChild>
+            <AutoOverflowChild>2</AutoOverflowChild>
+            <AutoOverflowChild>3</AutoOverflowChild>
+            {this.showItemFour && <AutoOverflowChild>4</AutoOverflowChild>}
+          </AutoOverflow>
+        )
+      }
+    })
+    await nextTick()
+    expect(wrapper.html()).toContain('1\n2\n3')
+    await wrapper.setData({ showItemFour: true })
+    expect(wrapper.html()).toContain('1\n2')
+    expect(wrapper.html()).not.toContain('1\n2\n3')
+    await wrapper.setData({ showItemFour: false })
+    expect(wrapper.html()).toContain('1\n2\n3')
   })
 
   // test('渲染同步内容', async () => {
