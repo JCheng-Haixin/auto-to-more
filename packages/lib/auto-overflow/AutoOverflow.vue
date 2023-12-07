@@ -1,5 +1,5 @@
 <script setup lang="tsx">
-  import { computed, getCurrentInstance, provide, ref, watch, h } from 'vue';
+  import { computed, getCurrentInstance, provide, ref, watch, h, nextTick } from 'vue';
   import { useOrderedChildren } from '../composables/getOrderedChildren'
   import { uniqueId } from 'lodash-es';
 
