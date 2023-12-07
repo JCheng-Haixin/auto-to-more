@@ -1,8 +1,9 @@
-import { describe, it, expect, beforeEach, afterEach, test } from 'vitest'
+import { describe, expect, test } from 'vitest'
 
 import { mount } from '@vue/test-utils'
 import AutoOverflow from '../auto-overflow'
 import AutoOverflowChild from '../auto-overflow-child'
+import { nextTick } from 'vue'
 
 declare module 'vitest' {
   export interface ProvidedContext {
@@ -16,21 +17,23 @@ function wait(timeout) {
   })
 }
 
-// describe('AutoOverflowChild', () => {
-//   test('渲染内容', () => {
-//     const wrapper = mount({
-//       render() {
-//         return (
-//           <AutoOverflowChild>1</AutoOverflowChild>
-//         )
-//       }
-//     })
-//     expect(wrapper.html()).toContain('1')
-//   })
-// })
+describe('AutoOverflowChild', () => {
+  test('渲染内容', async () => {
+    const wrapper = mount({
+      render() {
+        return (
+          <AutoOverflowChild>1</AutoOverflowChild>
+        )
+      }
+    })
+    // 默认不展示，需要 nextTick
+    await nextTick()
+    expect(wrapper.html()).toContain('1')
+  })
+})
 
 describe('AutoOverflow', () => {
-  test('should render content', () => {
+  test('渲染普通内容', () => {
     const wrapper = mount({
       render() {
         return (
@@ -41,50 +44,68 @@ describe('AutoOverflow', () => {
     expect(wrapper.html()).toContain('1')
   })
 
-  test('default child is 3', () => {
+  test('默认3个子组件时渲染3个', async () => {
     const wrapper = mount({
       render() {
         return (
           <AutoOverflow v-slots={{ ['overflow-content']: () => (<>abc</>) }}>
             <AutoOverflowChild>1</AutoOverflowChild>
-            <AutoOverflowChild>1</AutoOverflowChild>
-            <AutoOverflowChild>1</AutoOverflowChild>
-            <AutoOverflowChild>1</AutoOverflowChild>
+            <AutoOverflowChild>2</AutoOverflowChild>
+            <AutoOverflowChild>3</AutoOverflowChild>
           </AutoOverflow>
         )
       }
     })
-    console.log('abc', wrapper.html())
-    expect(wrapper.html()).toContain('111')
+    await nextTick()
+    expect(wrapper.html()).toContain('1\n2\n3')
   })
 
-
-
-  test('渲染同步内容', async () => {
-    let c = null  
+  // TODO: 允许配置？
+  test('默认4个子组件时渲染2个', async () => {
     const wrapper = mount({
       render() {
         return (
-          <AutoOverflow v-slots={{
-            default: () => (<>
-              <AutoOverflowChild>1</AutoOverflowChild>
-              <AutoOverflowChild>2</AutoOverflowChild>
-              <AutoOverflowChild>3</AutoOverflowChild>
-              <AutoOverflowChild>4</AutoOverflowChild>
-              <AutoOverflowChild>5</AutoOverflowChild>
-            </>),
-            ['overflow-content']: ({ OverflowContent }) => {
-              c = OverflowContent
-              return <div>abc<OverflowContent /></div>
-            }
-          }}></AutoOverflow>
+          <AutoOverflow v-slots={{ ['overflow-content']: () => (<>abc</>) }}>
+            <AutoOverflowChild>1</AutoOverflowChild>
+            <AutoOverflowChild>2</AutoOverflowChild>
+            <AutoOverflowChild>3</AutoOverflowChild>
+            <AutoOverflowChild>4</AutoOverflowChild>
+          </AutoOverflow>
         )
       }
     })
-    await wait(1000)
-    const d = wrapper.getComponent(c)
-    console.log('同步', d)
+    await nextTick()
+    expect(wrapper.html()).toContain('1\n2')
+    expect(wrapper.html()).not.toContain('1\n2\n3')
   })
+
+  // test('渲染同步内容', async () => {
+  //   let OutsideOverflowContent = null  
+  //   const wrapper = mount({
+  //     render() {
+  //       return (
+  //         <AutoOverflow v-slots={{
+  //           default: () => (<>
+  //             <AutoOverflowChild>1</AutoOverflowChild>
+  //             <AutoOverflowChild>2</AutoOverflowChild>
+  //             <AutoOverflowChild>3</AutoOverflowChild>
+  //             <AutoOverflowChild>4</AutoOverflowChild>
+  //             <AutoOverflowChild>5</AutoOverflowChild>
+  //           </>),
+  //           ['overflow-content']: ({ OverflowContent }) => {
+  //             OutsideOverflowContent = OverflowContent
+  //             return <div>
+  //               <OverflowContent />
+  //             </div>
+  //           }
+  //         }}></AutoOverflow>
+  //       )
+  //     }
+  //   })
+  //   await wait(1000)
+  //   const d = wrapper.getComponent(c)
+  //   console.log('同步', d)
+  // })
 
   // it('renders properly', async () => {
   //   const wrapper = mount(AutoOverflow, { 

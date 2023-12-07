@@ -8,9 +8,13 @@
 
   const instance = getCurrentInstance()!
 
-  const { add, remove } = inject('mountAction') as any
-
-  const childShow = ref(false)
+  const { add, remove } = inject('mountAction', {
+    add(child) { 
+      child.hidden = false
+      console.warn('AutoOverflowChild: need use AutoOverflow as parent') 
+    }, 
+    remove() {}
+  }) as any
 
   const child = reactive({
     uid: instance.uid,
@@ -18,16 +22,12 @@
     hidden: true
   })
 
-  onMounted(() => {
-    add(child) 
-    childShow.value = true
-  })
-
+  onMounted(() => { add(child) })
   onUnmounted(() => { remove(instance.uid) })
 </script>
 
 <template>
-  <template v-if="!child.hidden && childShow">
+  <template v-if="!child.hidden">
     <slot v-if="!child.to" />
     <Teleport v-else :to="child.to">
       <slot />
