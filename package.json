@@ -8,15 +8,20 @@
     "build": "run-p type-check \"build-only {@}\" --",
     "preview": "vite preview",
     "test:unit": "vitest",
+    "test:coverage": "vitest run --coverage",
     "build-only": "vite build",
-    "type-check": "vue-tsc --noEmit -p tsconfig.vitest.json --composite false"
+    "type-check": "vue-tsc --noEmit -p tsconfig.vitest.json --composite false",
+    "release": "node ./scripts/release.js"
   },
-  "type": "module",
   "keywords": [
-    "vue",
-    "more",
+    "auto-to-more",
+    "AutoToMore",
+    "auto",
     "overflow",
-    "vite"
+    "more",
+    "vue",
+    "vite",
+    "component"
   ],
   "files": [
     "package.json",
@@ -30,9 +35,13 @@
   },
   "dependencies": {
     "@vue/shared": "^3.3.9",
+    "enquirer": "^2.4.1",
+    "fs": "0.0.1-security",
     "lodash-es": "^4.17.21",
     "path": "^0.12.7",
     "sass": "^1.69.5",
+    "semver": "^7.5.4",
+    "vite-plugin-css-injected-by-js": "^3.3.0",
     "vue": "^3.3.4"
   },
   "devDependencies": {
@@ -42,6 +51,7 @@
     "@types/node": "^18.18.5",
     "@vitejs/plugin-vue": "^4.4.0",
     "@vitejs/plugin-vue-jsx": "^3.0.2",
+    "@vitest/coverage-v8": "^0.34.6",
     "@vue/test-utils": "^2.4.1",
     "@vue/tsconfig": "^0.4.0",
     "jsdom": "^22.1.0",

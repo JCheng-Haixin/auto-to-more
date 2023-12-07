@@ -16,7 +16,7 @@
   const child = reactive({
     uid: instance.uid,
     to: '',
-    hidden: false
+    hidden: true
   })
 
   onMounted(() => {

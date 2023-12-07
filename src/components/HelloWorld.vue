@@ -1,5 +1,8 @@
 <script setup lang="ts">
-import { AutoOverflow, AutoOverflowChild } from '../../packages'
+// import { AutoOverflow, AutoOverflowChild } from '../../packages'
+import AutoOverflow from '../../packages/lib/auto-overflow/AutoOverflow.vue'
+import AutoOverflowChild from '../../packages/lib/auto-overflow-child/AutoOverflowChild.vue'
+import { ref } from 'vue';
 
 defineProps<{
   msg: string
