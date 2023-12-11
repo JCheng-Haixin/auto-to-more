@@ -1,0 +1,46 @@
+name: CI
+on:
+  push:
+    branches: # 触发ci/cd的代码分支
+      - beta-v1.0
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout # 将代码拉到虚拟机
+        uses: actions/checkout@v3
+     
+      - name: Use Node.js # 指定node版本
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16.x'
+          registry-url: 'https://registry.npmjs.org'
+     
+      - name: Cache # 依赖缓存策略
+        id: cache-dependencies
+        uses: actions/cache@v3
+        with:
+          path: |
+            **/node_modules
+          key: ${{runner.OS}}-${{hashFiles('**/pnpm-lock.yaml')}}
+     
+      - name: Install pnpm # 安装pnpm
+        run: npm install -g pnpm@8.6.2
+     
+      - name: Installing Dependencies # 依赖下载
+        if: steps.cache-dependencies.outputs.cache-hit != 'true'
+        run: pnpm install
+
+      - name: Upload coverage to Coveralls
+        run: pnpm run test:coverage
+        env:
+          COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
+     
+      # - name: Running Build # 打包
+      #   run: pnpm run build
+     
+      # - name: Running Publish # 发布
+      #   working-directory: ./packages
+      #   run: npm publish --tag=next
+      #   env:
+      #     NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
