@@ -1,6 +1,6 @@
 {
   "name": "auto-to-more",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "元素溢出传送",
   "main": "./dist/auto-to-more.mjs",
   "typings": "./dist/index.d.ts",

@@ -37,7 +37,8 @@ const main = async () => {
   const { yes } = await prompt({
     type: 'confirm',
     name: 'yes',
-    message: `Releasing v${targetVersion}. Confirm?`
+    message: `Releasing v${targetVersion}. Confirm?`,
+    initial: true
   })
   if (!yes) return
 
