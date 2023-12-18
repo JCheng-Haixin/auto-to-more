@@ -1,12 +1,9 @@
 <h1 align="center">AutoToMore</h1>
 
-<center>
-
-  [![Static Badge](https://img.shields.io/npm/v/auto-to-more)](https://www.npmjs.com/package/auto-to-more)
-  ![npm](https://img.shields.io/npm/dm/auto-to-more)
-  ![Codecov](https://img.shields.io/codecov/c/github/JCheng-Haixin/juKfJNJcbSfVQm1QjMjTyeKX4lhGghgsm)
-
-</center>
+<p align="center">
+  <a href="https://www.npmjs.com/package/auto-to-more"><img src="https://img.shields.io/npm/v/auto-to-more"></a>
+  <img src="https://img.shields.io/npm/dm/auto-to-more">
+</p>
 
 # auto-to-more
 一个基于 `Vue3` `Teleport` 实现的溢出传送组件。例子：当一个元素中拥有多个元素，又不需要全部展示时，可将多余的元素隐藏至指定位置，再通过指定的元素与触发条件来展示这些被暂时隐藏的元素。
