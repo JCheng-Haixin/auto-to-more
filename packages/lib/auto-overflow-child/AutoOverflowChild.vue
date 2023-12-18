@@ -9,7 +9,7 @@
   const instance = getCurrentInstance()!
 
   const { add, remove } = inject('mountAction', {
-    add(child) { 
+    add(child: any) { 
       child.hidden = false
       console.warn('AutoOverflowChild: need use AutoOverflow as parent') 
     }, 
